@@ -42,7 +42,7 @@ def primeList(n):
 
         #We now can make a list that we will populate with the actual prime numbers
         #from our True, False table
-	primes = []
+        primes = []
 
         for (j, isprime) in enumerate(sieve):
           if isprime:
