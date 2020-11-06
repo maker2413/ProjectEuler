@@ -11,9 +11,9 @@ start = Eulerlib.getTime()
 #and then finding multples of that number until we find a number divisible by 18 and
 #multiple that until we find a multiple divisible by 17 etc.
 for i in range(20 , 0, -1):
-	while y % i != 0:
-		y += x
-	x = y
+  while y % i != 0:
+    y += x
+  x = y
 
 Eulerlib.answer = y
 

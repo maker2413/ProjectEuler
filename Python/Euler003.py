@@ -12,9 +12,9 @@ start = Eulerlib.getTime()
 #are factors of z. We can then check if each factor is prime to find the greatest 
 #common prime factor
 for i in range (3, int(z**.5)):
-	if z % i == 0:
-		if Eulerlib.primeCheck(i):
-			Eulerlib.answer = i
+  if z % i == 0:
+    if Eulerlib.primeCheck(i):
+      Eulerlib.answer = i
 
 #Stop timer to time algorithm
 end = Eulerlib.getTime()

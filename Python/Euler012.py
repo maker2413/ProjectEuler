@@ -5,12 +5,12 @@ import Eulerlib
 #This function takes in a number and will return a total of how many divisors
 #the input number has
 def findDivisors(n):
-	total = 0
-	for i in range(1, int(n**.5)+1):
-		if n % i == 0:
-			total += 2
+  total = 0
+  for i in range(1, int(n**.5)+1):
+    if n % i == 0:
+      total += 2
 
-	return total
+  return total
 
 #Start timer to time algorithm
 start = Eulerlib.getTime()
@@ -21,8 +21,8 @@ x, y = 1, 2
 
 #Keep generating triangle numbers until one is found that has more than 500 divisors
 while findDivisors(x) <= 500:
-	x += y
-	y += 1
+  x += y
+  y += 1
 
 Eulerlib.answer = x
 

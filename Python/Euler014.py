@@ -4,9 +4,7 @@ import Eulerlib
 
 #Start timer to time algorithm
 start = Eulerlib.getTime()
-
-
-
+y
 #Stop timer to time algorithm
 end = Eulerlib.getTime()
 

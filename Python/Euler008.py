@@ -13,12 +13,12 @@ start = Eulerlib.getTime()
 #recorded product. Computer are fast enough that this still finds the answer 
 #in a hundreth of a second
 for i in range(0, len(number)-12):
-	product = int(number[i])
-	for j in range(1, 13):
-		product *= int(number[i+j])
+  product = int(number[i])
+  for j in range(1, 13):
+    product *= int(number[i+j])
 
-	if product > Eulerlib.answer:
-		Eulerlib.answer = product
+  if product > Eulerlib.answer:
+    Eulerlib.answer = product
 
 #Stop timer to time algorithm
 end = Eulerlib.getTime()
