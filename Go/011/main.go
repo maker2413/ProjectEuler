@@ -2,6 +2,14 @@ package main
 
 import "fmt"
 
+func checkProduct(a, b, c, d, answer int) int {
+	if a*b*c*d > answer {
+		answer = a * b * c * d
+	}
+
+	return answer
+}
+
 func main() {
 	grid := [20][20]int{
 		{8, 02, 22, 97, 38, 15, 00, 40, 00, 75, 04, 05, 07, 78, 52, 12, 50, 77, 91, 8},
@@ -25,6 +33,24 @@ func main() {
 		{20, 73, 35, 29, 78, 31, 90, 01, 74, 31, 49, 71, 48, 86, 81, 16, 23, 57, 05, 54},
 		{01, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52, 01, 89, 19, 67, 48},
 	}
+	var answer int
 
-	fmt.Println(grid)
+	for y := 0; y < len(grid)-1; y++ {
+		for x := 0; x < len(grid[y])-1; x++ {
+			if x+3 < len(grid[y]) {
+				answer = checkProduct(grid[y][x], grid[y][x+1], grid[y][x+2], grid[y][x+3], answer)
+			}
+			if y+3 < len(grid) {
+				answer = checkProduct(grid[y][x], grid[y+1][x], grid[y+2][x], grid[y+3][x], answer)
+			}
+			if y+3 < len(grid) && x+3 < len(grid[y]) {
+				answer = checkProduct(grid[y][x], grid[y+1][x+1], grid[y+2][x+2], grid[y+3][x+3], answer)
+			}
+			if y+3 < len(grid) && x-3 >= 0 {
+				answer = checkProduct(grid[y][x], grid[y+1][x-1], grid[y+2][x-2], grid[y+3][x-3], answer)
+			}
+		}
+	}
+
+	fmt.Println(answer)
 }
