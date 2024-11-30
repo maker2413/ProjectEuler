@@ -5,6 +5,10 @@ import (
 	"strings"
 )
 
+const (
+	to = 1000
+)
+
 var words = map[int]string{
 	0:  "zero",
 	1:  "one",
@@ -24,11 +28,11 @@ var words = map[int]string{
 	15: "fifteen",
 	16: "sixteen",
 	17: "seventeen",
-	18: "eightteen",
+	18: "eighteen",
 	19: "nineteen",
 	20: "twenty",
 	30: "thirty",
-	40: "fourty",
+	40: "forty",
 	50: "fifty",
 	60: "sixty",
 	70: "seventy",
@@ -64,29 +68,33 @@ func convertToWords(n int, result *strings.Builder) string {
 		result.WriteString(words[m])
 		result.WriteString(" ")
 		result.WriteString("hundred")
+		if n-(m*100) != 0 {
+			result.WriteString(" ")
+			result.WriteString("and")
+		}
 		convertToWords(n-(m*100), result)
-	case n > 90:
+	case n >= 90:
 		result.WriteString(words[90])
 		convertToWords(n-90, result)
-	case n > 80:
+	case n >= 80:
 		result.WriteString(words[80])
 		convertToWords(n-80, result)
-	case n > 70:
+	case n >= 70:
 		result.WriteString(words[70])
 		convertToWords(n-70, result)
-	case n > 60:
+	case n >= 60:
 		result.WriteString(words[60])
 		convertToWords(n-60, result)
-	case n > 50:
+	case n >= 50:
 		result.WriteString(words[50])
 		convertToWords(n-50, result)
-	case n > 40:
+	case n >= 40:
 		result.WriteString(words[40])
 		convertToWords(n-40, result)
-	case n > 30:
+	case n >= 30:
 		result.WriteString(words[30])
 		convertToWords(n-30, result)
-	case n > 20:
+	case n >= 20:
 		result.WriteString(words[20])
 		convertToWords(n-20, result)
 	default:
@@ -105,11 +113,20 @@ func firstDigit(n int) int {
 }
 
 func characterCount(s string) int {
-	return 0
+	s = strings.ReplaceAll(s, " ", "")
+	s = strings.ReplaceAll(s, "-", "")
+
+	return len(s)
 }
 
 func main() {
-	var result strings.Builder
+	var answer int
 
-	fmt.Println(convertToWords(-36, &result))
+	for i := 1; i <= to; i++ {
+		var result strings.Builder
+
+		answer += characterCount(convertToWords(i, &result))
+	}
+
+	fmt.Println(answer)
 }
