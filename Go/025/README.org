@@ -1,0 +1,15 @@
+#+TITLE: [[https://projecteuler.net/problem=25][Problem 25]]
+
+The Fibonacci sequence is defined by the recurrence relation:
+f(n) = f(n-1) + f(n-2), where =f_1= = =1= and =f_2= = =1=.
+
+Hence the first =12= terms will be:
+=1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144=
+
+The 12th term, =f_12=, is the first term to contain three digits.
+
+What is the index of the first term in the Fibonacci sequence to contain =1000=
+digits?
+
+I had to consult a this guide to complete the problem:
+https://r-knott.surrey.ac.uk/fibonacci/fibformula.html
