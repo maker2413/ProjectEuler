@@ -28,8 +28,8 @@ func sumPandigital() int {
 	var sum int
 	pandigital := make(map[string]int)
 
-	for a := 1; a <= 987; a++ {
-		for b := 1; b <= 987; b++ {
+	for a := 1; a <= 98; a++ {
+		for b := 1; b <= 4321; b++ {
 			strA := strconv.Itoa(a)
 			strB := strconv.Itoa(b)
 			strProd := strconv.Itoa(a * b)
@@ -47,11 +47,10 @@ func sumPandigital() int {
 				}
 
 				if confirmPandigital(fullString.String()) {
-					if pandigital[fullString.String()] == 0 {
+					if pandigital[strProd] == 0 {
 						sum += a * b
-						fmt.Println(fullString.String())
 						fmt.Println(a, b, a*b)
-						pandigital[fullString.String()]++
+						pandigital[strProd]++
 					}
 				}
 			}
@@ -63,7 +62,8 @@ func sumPandigital() int {
 
 func main() {
 	answer := sumPandigital()
+	//answer := confirmPandigital("437691258")
 
 	fmt.Println(answer)
-	fmt.Println(45228 - answer)
+	//fmt.Println(confirmPandigital("123456780"))
 }
