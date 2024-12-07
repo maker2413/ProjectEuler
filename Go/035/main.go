@@ -3,6 +3,11 @@ package main
 import (
 	"fmt"
 	"math"
+	"strconv"
+)
+
+const (
+	to = 1000000
 )
 
 func isPrime(n int) bool {
@@ -23,8 +28,38 @@ func isPrime(n int) bool {
 	return true
 }
 
-func main() {
-	var answer int
+func rotate(s string) string {
+	tmp := s + s
 
-	fmt.Println(answer)
+	return tmp[1 : len(s)+1]
+}
+
+func isCircularPrime(n int) bool {
+	if !isPrime(n) {
+		return false
+	}
+
+	str := strconv.Itoa(n)
+
+	for rotatedStr := rotate(str); rotatedStr != str; rotatedStr = rotate(rotatedStr) {
+		i, _ := strconv.Atoi(rotatedStr)
+
+		if !isPrime(i) {
+			return false
+		}
+	}
+
+	return true
+}
+
+func main() {
+	var circularPrimes []int
+
+	for i := 1; i < to; i++ {
+		if isCircularPrime(i) {
+			circularPrimes = append(circularPrimes, i)
+		}
+	}
+
+	fmt.Println(len(circularPrimes))
 }
