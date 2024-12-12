@@ -5,6 +5,10 @@ import (
 	"math"
 )
 
+const (
+	consec = 4
+)
+
 func isPrime(n int) bool {
 	if n < 2 {
 		return false
@@ -23,11 +27,27 @@ func isPrime(n int) bool {
 	return true
 }
 
+func primeFactorCount(n int, primes []int) int {
+	factors := make(map[int]int)
+
+	for n != 1 {
+		for _, prime := range primes {
+			if n%prime == 0 {
+				factors[prime]++
+				n /= prime
+				break
+			}
+		}
+	}
+
+	return len(factors)
+}
+
 func main() {
 	var answer int
 	primes := []int{2}
 
-	for p := 3; len(primes) < 1000; p += 2 {
+	for p := 3; len(primes) < 100000; p += 2 {
 		if isPrime(p) {
 			primes = append(primes, p)
 		}
@@ -35,9 +55,14 @@ func main() {
 
 	var consecutivePrimes int
 
-	for i := 2; consecutivePrimes <= 2; i++ {
-		consecutivePrimes++
+	for i := 2; consecutivePrimes < consec; i++ {
+		if primeFactorCount(i, primes) == consec {
+			consecutivePrimes++
+			answer = i
+		} else {
+			consecutivePrimes = 0
+		}
 	}
 
-	fmt.Println(answer)
+	fmt.Println(answer - consec + 1)
 }
