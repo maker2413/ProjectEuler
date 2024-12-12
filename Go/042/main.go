@@ -30,11 +30,11 @@ func main() {
 	str := string(f)
 	str = strings.ReplaceAll(str, "\"", "")
 
-	names := strings.Split(str, ",")
-	sort.Strings(names)
+	words := strings.Split(str, ",")
+	sort.Strings(words)
 
-	for j := 0; j < len(names); j++ {
-		if triangleNumbers[numericValue(names[j])] == 1 {
+	for j := 0; j < len(words); j++ {
+		if triangleNumbers[numericValue(words[j])] == 1 {
 			answer++
 		}
 	}
