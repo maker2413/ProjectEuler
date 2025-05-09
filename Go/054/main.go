@@ -27,8 +27,8 @@ func main() {
 	P1 := ConvertToHand([5]string(firstHand[:5]))
 	P2 := ConvertToHand([5]string(firstHand[5:]))
 
-	P1.Print()
-	P2.Print()
+	fmt.Println(P1.Print())
+	fmt.Println(P2.Print())
 
 	if P1.IsRoyalFlush() {
 		answer++

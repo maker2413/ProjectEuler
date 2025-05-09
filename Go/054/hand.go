@@ -16,16 +16,55 @@ func ConvertToHand(input [5]string) Hand {
 	return newHand
 }
 
-func (h Hand) Print() {
-	fmt.Print("This hand has:")
+func (h Hand) Print() string {
+	s := ""
 
-	for _, c := range h.cards {
-		fmt.Print(" ")
-		c.Print()
-		fmt.Print(",")
+	for i, c := range h.cards {
+		if i != 4 {
+			s += fmt.Sprintf("%s, ", c.Print())
+		} else {
+			s += fmt.Sprintf("%s", c.Print())
+		}
 	}
 
-	fmt.Print("\n")
+	return s
+}
+
+func (h *Hand) Sort() {
+	lowest := h.LowestCard()
+	h2 := Hand{}
+
+	h2.cards[0] = h.cards[lowest]
+}
+
+func (h Hand) LowestCard() (position int) {
+	lowest := h.cards[0].rank
+
+	for i, c := range h.cards {
+		if c.rank < lowest {
+			position = i
+			lowest = c.rank
+		} else if c.rank == lowest && c.suite < h.cards[position].suite {
+			position = i
+		}
+	}
+
+	return position
+}
+
+func (h Hand) HighestCard() (position int) {
+	highest := h.cards[position].rank
+
+	for i, c := range h.cards {
+		if c.rank > highest {
+			position = i
+			highest = c.rank
+		} else if c.rank == highest && c.suite > h.cards[position].suite {
+			position = i
+		}
+	}
+
+	return position
 }
 
 func (h Hand) IsFlush() bool {
@@ -61,5 +100,3 @@ func (h Hand) IsRoyalFlush() bool {
 
 	return true
 }
-
-func (h Hand) Sort() {}

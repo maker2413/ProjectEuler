@@ -26,10 +26,10 @@ const (
 
 const (
 	UndefinedSuite Suite = iota
-	Spades
-	Hearts
-	Diamonds
 	Clubs
+	Diamonds
+	Hearts
+	Spades
 )
 
 var rankName = map[Rank]string{
@@ -52,10 +52,10 @@ var rankName = map[Rank]string{
 
 var suiteName = map[Suite]string{
 	UndefinedSuite: "Undefined",
-	Spades:         "Spades",
-	Hearts:         "Hearts",
-	Diamonds:       "Diamonds",
 	Clubs:          "Clubs",
+	Diamonds:       "Diamonds",
+	Hearts:         "Hearts",
+	Spades:         "Spades",
 }
 
 type Card struct {
@@ -110,18 +110,38 @@ func convertToRank(r string) Rank {
 func convertToSuite(s string) Suite {
 	switch s {
 	case "S":
-		return Suite(1)
-	case "H":
-		return Suite(2)
-	case "D":
-		return Suite(3)
-	case "C":
 		return Suite(4)
+	case "H":
+		return Suite(3)
+	case "D":
+		return Suite(2)
+	case "C":
+		return Suite(1)
 	default:
 		return Suite(0)
 	}
 }
 
-func (c Card) Print() {
-	fmt.Printf("%s of %s", rankName[c.rank], suiteName[c.suite])
+func (c Card) Print() string {
+	return fmt.Sprintf("%s of %s", rankName[c.rank], suiteName[c.suite])
+}
+
+func (c Card) IsLower(c2 Card) bool {
+	if c.rank < c2.rank {
+		return true
+	} else if c.rank == c2.rank && c.suite < c2.suite {
+		return true
+	}
+
+	return false
+}
+
+func (c Card) IsHigher(c2 Card) bool {
+	if c.rank > c2.rank {
+		return true
+	} else if c.rank == c2.rank && c.suite > c2.suite {
+		return true
+	}
+
+	return false
 }
