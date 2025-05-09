@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
+	"os"
 	"sort"
 	"strings"
 )
@@ -10,7 +10,7 @@ import (
 func numericValue(s string) int {
 	var value int
 
-	for i := 0; i < len(s); i++ {
+	for i := range s {
 		value += int(s[i] - 64)
 	}
 
@@ -20,7 +20,7 @@ func numericValue(s string) int {
 func main() {
 	var answer int
 
-	f, _ := ioutil.ReadFile("names.txt")
+	f, _ := os.ReadFile("names.txt")
 
 	str := string(f)
 	str = strings.ReplaceAll(str, "\"", "")
@@ -28,7 +28,7 @@ func main() {
 	names := strings.Split(str, ",")
 	sort.Strings(names)
 
-	for i := 0; i < len(names); i++ {
+	for i := range names {
 		answer += (i + 1) * numericValue(names[i])
 	}
 
