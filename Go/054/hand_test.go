@@ -7,50 +7,353 @@ import (
 )
 
 func TestHand(t *testing.T) {
-	h := ConvertToHand([5]string{"JS", "QS", "TS", "KS", "AS"})
+	h := ConvertToHand([5]string{"JS", "9C", "TH", "2S", "AC"})
 	assert.NotNil(t, h)
 
 	t.Run("Print", func(t *testing.T) {
 		assert.Equal(t,
-			"Jack of Spades, Queen of Spades, Ten of Spades, King of Spades, Ace of Spades",
+			"Jack of Spades, Nine of Clubs, Ten of Hearts, Two of Spades, Ace of Clubs",
 			h.Print())
 	})
 
 	t.Run("HighestCard", func(t *testing.T) {
-		assert.Equal(t, 4, h.HighestCard())
+		tests := []struct {
+			input    Hand
+			expected int
+		}{
+			{input: ConvertToHand([5]string{"JS", "QS", "TS", "KS", "AS"}), expected: 4},
+			{input: ConvertToHand([5]string{"JS", "AD", "TS", "AS", "AC"}), expected: 3},
+		}
 
-		h2 := ConvertToHand([5]string{"JS", "AD", "TS", "AS", "AC"})
-		assert.Equal(t, 3, h2.HighestCard())
+		for _, tt := range tests {
+			assert.Equal(t, tt.expected, tt.input.HighestCard())
+		}
 	})
 
 	t.Run("LowestCard", func(t *testing.T) {
-		assert.Equal(t, 2, h.LowestCard())
+		tests := []struct {
+			input    Hand
+			expected int
+		}{
+			{input: ConvertToHand([5]string{"JS", "QS", "TS", "KS", "AS"}), expected: 2},
+			{input: ConvertToHand([5]string{"JS", "AD", "TS", "TC", "AC"}), expected: 3},
+		}
 
-		h2 := ConvertToHand([5]string{"JS", "AD", "TS", "TC", "AC"})
-		assert.Equal(t, 3, h2.LowestCard())
+		for _, tt := range tests {
+			assert.Equal(t, tt.expected, tt.input.LowestCard())
+		}
 	})
 
-	t.Run("Sort", func(t *testing.T) {})
+	t.Run("Sort", func(t *testing.T) {
+		tests := []struct {
+			input    Hand
+			expected Hand
+		}{
+			{
+				input:    ConvertToHand([5]string{"JS", "QS", "TS", "KS", "AS"}),
+				expected: ConvertToHand([5]string{"TS", "JS", "QS", "KS", "AS"}),
+			},
+			{
+				input:    ConvertToHand([5]string{"JS", "AD", "TS", "TC", "AC"}),
+				expected: ConvertToHand([5]string{"TC", "TS", "JS", "AC", "AD"}),
+			},
+		}
+
+		for _, tt := range tests {
+			tt.input.Sort()
+
+			assert.Equal(t, tt.expected, tt.input)
+		}
+	})
+
+	t.Run("RevSort", func(t *testing.T) {
+		tests := []struct {
+			input    Hand
+			expected Hand
+		}{
+			{
+				input:    ConvertToHand([5]string{"JS", "QS", "TS", "KS", "AS"}),
+				expected: ConvertToHand([5]string{"AS", "KS", "QS", "JS", "TS"}),
+			},
+			{
+				input:    ConvertToHand([5]string{"JS", "AD", "TS", "TC", "AC"}),
+				expected: ConvertToHand([5]string{"AD", "AC", "JS", "TS", "TC"}),
+			},
+		}
+
+		for _, tt := range tests {
+			tt.input.RevSort()
+
+			assert.Equal(t, tt.expected, tt.input)
+		}
+	})
+
+	t.Run("IsStraight", func(t *testing.T) {
+		tests := []struct {
+			input    Hand
+			expected bool
+		}{
+			{
+				input:    ConvertToHand([5]string{"JS", "QS", "TS", "KS", "AS"}),
+				expected: true,
+			},
+			{
+				input:    ConvertToHand([5]string{"5S", "4H", "7S", "6D", "3C"}),
+				expected: true,
+			},
+			{
+				input:    ConvertToHand([5]string{"JS", "AD", "TS", "TC", "AC"}),
+				expected: false,
+			},
+		}
+
+		for _, tt := range tests {
+			assert.Equal(t, tt.expected, tt.input.IsStraight(), tt.input.Print())
+		}
+	})
 
 	t.Run("IsFlush", func(t *testing.T) {
-		assert.True(t, h.IsFlush(), "expected hand to be flush")
+		tests := []struct {
+			input    Hand
+			expected bool
+		}{
+			{
+				input:    ConvertToHand([5]string{"JS", "QS", "TS", "KS", "AS"}),
+				expected: true,
+			},
+			{
+				input:    ConvertToHand([5]string{"JS", "AD", "TS", "TC", "AC"}),
+				expected: false,
+			},
+		}
 
-		h2 := h
-		h2.cards[2].suite++
-		assert.False(t, h2.IsFlush(), "expected hand not to be flush")
+		for _, tt := range tests {
+			assert.Equal(t, tt.expected, tt.input.IsFlush(), tt.input.Print())
+		}
 	})
 
 	t.Run("IsStraightFlush", func(t *testing.T) {
-		assert.True(t, h.IsStraightFlush(), "expected hand to be straight flush")
+		tests := []struct {
+			input    Hand
+			expected bool
+		}{
+			{
+				input:    ConvertToHand([5]string{"JS", "QS", "TS", "KS", "AS"}),
+				expected: true,
+			},
+			{
+				input:    ConvertToHand([5]string{"JS", "QS", "TS", "KS", "9S"}),
+				expected: true,
+			},
+			{
+				input:    ConvertToHand([5]string{"JS", "QS", "AS", "KS", "9S"}),
+				expected: false,
+			},
+			{
+				input:    ConvertToHand([5]string{"JS", "AD", "TS", "TC", "AC"}),
+				expected: false,
+			},
+			{
+				input:    ConvertToHand([5]string{"2S", "5S", "4S", "6S", "3S"}),
+				expected: true,
+			},
+		}
 
-		h2 := h
-		h2.cards[2].suite++
-		assert.False(t, h2.IsStraightFlush(), "expected hand to not be straight flush")
+		for _, tt := range tests {
+			assert.Equal(t, tt.expected, tt.input.IsStraightFlush(), tt.input.Print())
+		}
+	})
 
-		h3 := ConvertToHand([5]string{"1D", "3D", "5D", "4D", "2D"})
-		assert.True(t, h3.IsStraightFlush(), "expected hand to be straight flush")
+	t.Run("IsRoyalFlush", func(t *testing.T) {
+		tests := []struct {
+			input    Hand
+			expected bool
+		}{
+			{
+				input:    ConvertToHand([5]string{"JS", "QS", "TS", "KS", "AS"}),
+				expected: true,
+			},
+			{
+				input:    ConvertToHand([5]string{"JS", "AD", "TS", "TC", "AC"}),
+				expected: false,
+			},
+			{
+				input:    ConvertToHand([5]string{"JS", "9S", "TS", "KS", "AS"}),
+				expected: false,
+			},
+		}
 
-		// h4 := ConvertToHand([5]string{"1D", "6D", "5D", "4D", "2D"})
-		// assert.False(t, h4.IsStraightFlush(), "expected hand to not be straight flush")
+		for _, tt := range tests {
+			assert.Equal(t, tt.expected, tt.input.IsRoyalFlush(), tt.input.Print())
+		}
+	})
+
+	t.Run("HasFourOfAKind", func(t *testing.T) {
+		tests := []struct {
+			input    Hand
+			expected bool
+		}{
+			{
+				input:    ConvertToHand([5]string{"JS", "JC", "JD", "JH", "AS"}),
+				expected: true,
+			},
+			{
+				input:    ConvertToHand([5]string{"JS", "JC", "JH", "JD", "TC"}),
+				expected: true,
+			},
+			{
+				input:    ConvertToHand([5]string{"JS", "AD", "TS", "TC", "AC"}),
+				expected: false,
+			},
+			{
+				input:    ConvertToHand([5]string{"KC", "9C", "9S", "KS", "9H"}),
+				expected: false,
+			},
+		}
+
+		for _, tt := range tests {
+			assert.Equal(t, tt.expected, tt.input.HasFourOfAKind(), tt.input.Print())
+		}
+	})
+
+	t.Run("HasThreeOfAKind", func(t *testing.T) {
+		tests := []struct {
+			input    Hand
+			expected bool
+		}{
+			{
+				input:    ConvertToHand([5]string{"JS", "JC", "JD", "JH", "AS"}),
+				expected: true,
+			},
+			{
+				input:    ConvertToHand([5]string{"JS", "JC", "JH", "JD", "TC"}),
+				expected: true,
+			},
+			{
+				input:    ConvertToHand([5]string{"7S", "8C", "TS", "TC", "TD"}),
+				expected: true,
+			},
+			{
+				input:    ConvertToHand([5]string{"JS", "JC", "JH", "TD", "TC"}),
+				expected: true,
+			},
+			{
+				input:    ConvertToHand([5]string{"KC", "9C", "9S", "KS", "TH"}),
+				expected: false,
+			},
+		}
+
+		for _, tt := range tests {
+			assert.Equal(t, tt.expected, tt.input.HasThreeOfAKind(), tt.input.Print())
+		}
+	})
+
+	t.Run("HasPair", func(t *testing.T) {
+		tests := []struct {
+			input    Hand
+			expected bool
+		}{
+			{
+				input:    ConvertToHand([5]string{"JS", "JC", "JD", "JH", "AS"}),
+				expected: true,
+			},
+			{
+				input:    ConvertToHand([5]string{"9S", "8C", "JH", "TD", "TC"}),
+				expected: true,
+			},
+			{
+				input:    ConvertToHand([5]string{"KC", "9C", "8S", "JS", "TH"}),
+				expected: false,
+			},
+		}
+
+		for _, tt := range tests {
+			assert.Equal(t, tt.expected, tt.input.HasPair(), tt.input.Print())
+		}
+	})
+
+	t.Run("HasTwoPair", func(t *testing.T) {
+		tests := []struct {
+			input    Hand
+			expected bool
+		}{
+			{
+				input:    ConvertToHand([5]string{"JS", "JC", "JD", "AH", "AS"}),
+				expected: true,
+			},
+			{
+				input:    ConvertToHand([5]string{"8S", "8C", "JH", "TD", "TC"}),
+				expected: true,
+			},
+			{
+				input:    ConvertToHand([5]string{"KC", "9C", "8S", "JS", "TH"}),
+				expected: false,
+			},
+			{
+				input:    ConvertToHand([5]string{"KC", "9C", "9S", "JS", "TH"}),
+				expected: false,
+			},
+		}
+
+		for _, tt := range tests {
+			assert.Equal(t, tt.expected, tt.input.HasTwoPair(), tt.input.Print())
+		}
+	})
+
+	t.Run("HasFullHouse", func(t *testing.T) {
+		tests := []struct {
+			input    Hand
+			expected bool
+		}{
+			{
+				input:    ConvertToHand([5]string{"JS", "JC", "JD", "AH", "AS"}),
+				expected: true,
+			},
+			{
+				input:    ConvertToHand([5]string{"JS", "JC", "JH", "TD", "TC"}),
+				expected: true,
+			},
+			{
+				input:    ConvertToHand([5]string{"KC", "9C", "9S", "KS", "TH"}),
+				expected: false,
+			},
+			{
+				input:    ConvertToHand([5]string{"KC", "9C", "7S", "KS", "KH"}),
+				expected: false,
+			},
+		}
+
+		for _, tt := range tests {
+			assert.Equal(t, tt.expected, tt.input.HasFullHouse(), tt.input.Print())
+		}
+	})
+
+	t.Run("HasHighestCard", func(t *testing.T) {
+		tests := []struct {
+			input    Hand
+			opponent Hand
+			expected bool
+		}{
+			{
+				input:    ConvertToHand([5]string{"JS", "JC", "JD", "AH", "AS"}),
+				opponent: ConvertToHand([5]string{"JS", "TC", "JD", "AH", "AS"}),
+				expected: true,
+			},
+			{
+				input:    ConvertToHand([5]string{"JS", "QC", "TD", "AH", "AS"}),
+				opponent: ConvertToHand([5]string{"JD", "QH", "TS", "AD", "9S"}),
+				expected: true,
+			},
+			{
+				input:    ConvertToHand([5]string{"JS", "JC", "JD", "AH", "AS"}),
+				opponent: ConvertToHand([5]string{"JS", "JC", "JD", "AH", "AS"}),
+				expected: false,
+			},
+		}
+
+		for _, tt := range tests {
+			assert.Equal(t, tt.expected, tt.input.HasHighestCard(tt.opponent),
+				tt.input.Print(), tt.opponent.Print())
+		}
 	})
 }

@@ -8,7 +8,6 @@ type Suite int
 
 const (
 	UndefinedRank Rank = iota
-	One
 	Two
 	Three
 	Four
@@ -34,7 +33,6 @@ const (
 
 var rankName = map[Rank]string{
 	UndefinedRank: "Undefined",
-	One:           "One",
 	Two:           "Two",
 	Three:         "Three",
 	Four:          "Four",
@@ -74,34 +72,32 @@ func ConvertToCard(input string) Card {
 
 func convertToRank(r string) Rank {
 	switch r {
-	case "1":
-		return Rank(1)
 	case "2":
-		return Rank(2)
+		return Rank(1)
 	case "3":
-		return Rank(3)
+		return Rank(2)
 	case "4":
-		return Rank(4)
+		return Rank(3)
 	case "5":
-		return Rank(5)
+		return Rank(4)
 	case "6":
-		return Rank(6)
+		return Rank(5)
 	case "7":
-		return Rank(7)
+		return Rank(6)
 	case "8":
-		return Rank(8)
+		return Rank(7)
 	case "9":
-		return Rank(9)
+		return Rank(8)
 	case "T":
-		return Rank(10)
+		return Rank(9)
 	case "J":
-		return Rank(11)
+		return Rank(10)
 	case "Q":
-		return Rank(12)
+		return Rank(11)
 	case "K":
-		return Rank(13)
+		return Rank(12)
 	case "A":
-		return Rank(14)
+		return Rank(13)
 	default:
 		return Rank(0)
 	}
