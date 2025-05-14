@@ -73,48 +73,48 @@ func ConvertToCard(input string) Card {
 func convertToRank(r string) Rank {
 	switch r {
 	case "2":
-		return Rank(1)
+		return Two
 	case "3":
-		return Rank(2)
+		return Three
 	case "4":
-		return Rank(3)
+		return Four
 	case "5":
-		return Rank(4)
+		return Five
 	case "6":
-		return Rank(5)
+		return Six
 	case "7":
-		return Rank(6)
+		return Seven
 	case "8":
-		return Rank(7)
+		return Eight
 	case "9":
-		return Rank(8)
+		return Nine
 	case "T":
-		return Rank(9)
+		return Ten
 	case "J":
-		return Rank(10)
+		return Jack
 	case "Q":
-		return Rank(11)
+		return Queen
 	case "K":
-		return Rank(12)
+		return King
 	case "A":
-		return Rank(13)
+		return Ace
 	default:
-		return Rank(0)
+		return Rank(UndefinedSuite)
 	}
 }
 
 func convertToSuite(s string) Suite {
 	switch s {
 	case "S":
-		return Suite(4)
+		return Spades
 	case "H":
-		return Suite(3)
+		return Hearts
 	case "D":
-		return Suite(2)
+		return Diamonds
 	case "C":
-		return Suite(1)
+		return Clubs
 	default:
-		return Suite(0)
+		return UndefinedSuite
 	}
 }
 

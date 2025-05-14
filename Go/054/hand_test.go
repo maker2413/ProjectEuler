@@ -88,7 +88,7 @@ func TestHand(t *testing.T) {
 		}
 	})
 
-	t.Run("IsStraight", func(t *testing.T) {
+	t.Run("HasStraight", func(t *testing.T) {
 		tests := []struct {
 			input    Hand
 			expected bool
@@ -108,11 +108,11 @@ func TestHand(t *testing.T) {
 		}
 
 		for _, tt := range tests {
-			assert.Equal(t, tt.expected, tt.input.IsStraight(), tt.input.Print())
+			assert.Equal(t, tt.expected, tt.input.HasStraight(), tt.input.Print())
 		}
 	})
 
-	t.Run("IsFlush", func(t *testing.T) {
+	t.Run("HasFlush", func(t *testing.T) {
 		tests := []struct {
 			input    Hand
 			expected bool
@@ -128,11 +128,11 @@ func TestHand(t *testing.T) {
 		}
 
 		for _, tt := range tests {
-			assert.Equal(t, tt.expected, tt.input.IsFlush(), tt.input.Print())
+			assert.Equal(t, tt.expected, tt.input.HasFlush(), tt.input.Print())
 		}
 	})
 
-	t.Run("IsStraightFlush", func(t *testing.T) {
+	t.Run("HasStraightFlush", func(t *testing.T) {
 		tests := []struct {
 			input    Hand
 			expected bool
@@ -160,11 +160,11 @@ func TestHand(t *testing.T) {
 		}
 
 		for _, tt := range tests {
-			assert.Equal(t, tt.expected, tt.input.IsStraightFlush(), tt.input.Print())
+			assert.Equal(t, tt.expected, tt.input.HasStraightFlush(), tt.input.Print())
 		}
 	})
 
-	t.Run("IsRoyalFlush", func(t *testing.T) {
+	t.Run("HasRoyalFlush", func(t *testing.T) {
 		tests := []struct {
 			input    Hand
 			expected bool
@@ -184,7 +184,7 @@ func TestHand(t *testing.T) {
 		}
 
 		for _, tt := range tests {
-			assert.Equal(t, tt.expected, tt.input.IsRoyalFlush(), tt.input.Print())
+			assert.Equal(t, tt.expected, tt.input.HasRoyalFlush(), tt.input.Print())
 		}
 	})
 
@@ -354,6 +354,36 @@ func TestHand(t *testing.T) {
 		for _, tt := range tests {
 			assert.Equal(t, tt.expected, tt.input.HasHighestCard(tt.opponent),
 				tt.input.Print(), tt.opponent.Print())
+		}
+	})
+
+	t.Run("WinningHand", func(t *testing.T) {
+		tests := []struct {
+			input    Hand
+			expected PokerHand
+		}{
+			{
+				input:    ConvertToHand([5]string{"JS", "QS", "KS", "TS", "AS"}),
+				expected: RoyalFlush,
+			},
+			{
+				input:    ConvertToHand([5]string{"JS", "AH", "AD", "AC", "AS"}),
+				expected: FourOfAKind,
+			},
+			{
+				input:    ConvertToHand([5]string{"JS", "JH", "JD", "AC", "AS"}),
+				expected: FullHouse,
+			},
+			{
+				input:    ConvertToHand([5]string{"5D", "8C", "9S", "JS", "AC"}),
+				expected: UndefinedPokerHand,
+			},
+		}
+
+		for _, tt := range tests {
+			winHand, winRank := tt.input.WinningHand()
+			assert.Equal(t, tt.expected, winHand, tt.input.Print(), pokerHandName[winHand])
+			assert.NotNil(t, winRank)
 		}
 	})
 }

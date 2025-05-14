@@ -45,7 +45,7 @@ func TestConvertToSuite(t *testing.T) {
 
 func TestCard(t *testing.T) {
 	c := ConvertToCard("TD")
-	assert.Equal(t, Card{rank: 9, suite: 2}, c, "expected a ten of diamonds to be created")
+	assert.Equal(t, Card{rank: Ten, suite: Diamonds}, c, "expected a ten of diamonds to be created")
 
 	t.Run("Print", func(t *testing.T) {
 		assert.Equal(t, "Ten of Diamonds", c.Print())

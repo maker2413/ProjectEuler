@@ -18,20 +18,21 @@ func main() {
 	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
-	scanner.Scan()
 
-	firstHand := strings.Split(scanner.Text(), " ")
+	for scanner.Scan() {
 
-	fmt.Println(firstHand)
+		firstHand := strings.Split(scanner.Text(), " ")
 
-	P1 := ConvertToHand([5]string(firstHand[:5]))
-	P2 := ConvertToHand([5]string(firstHand[5:]))
+		pg := PokerGame{
+			p1: ConvertToHand([5]string(firstHand[:5])),
+			p2: ConvertToHand([5]string(firstHand[5:])),
+		}
 
-	fmt.Println(P1.Print())
-	fmt.Println(P2.Print())
+		pg.CheckWinner()
 
-	if P1.IsRoyalFlush() {
-		answer++
+		if pg.Winner == 1 {
+			answer++
+		}
 	}
 
 	fmt.Println(answer)
