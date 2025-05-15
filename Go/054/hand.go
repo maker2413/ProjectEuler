@@ -101,73 +101,64 @@ func (h Hand) NextHighestCard(current Rank) (position int) {
 	return position
 }
 
-func (h Hand) HasStraight() bool {
+func (h Hand) HasStraight() (bool, Rank) {
 	h.Sort()
 
 	lowestRank := h.cards[0].rank
 
 	for i, card := range h.cards {
 		if card.rank != Rank(i)+lowestRank {
-			return false
+			return false, UndefinedRank
 		}
 	}
 
-	return true
+	return true, lowestRank
 }
 
-func (h Hand) StraightRank() Rank {
-	h.Sort()
-
-	lowestRank := h.cards[0].rank
-
-	return lowestRank
-}
-
-func (h Hand) HasFlush() bool {
+func (h Hand) HasFlush() (bool, Rank) {
 	suite := h.cards[0].suite
 
 	for _, card := range h.cards {
 		if card.suite != suite {
-			return false
+			return false, UndefinedRank
 		}
 	}
 
-	return true
+	return true, h.cards[h.HighestCard()].rank
 }
 
-func (h Hand) HasStraightFlush() bool {
-	if !h.HasFlush() {
-		return false
+func (h Hand) HasStraightFlush() (bool, Rank) {
+	hasFlush, _ := h.HasFlush()
+	if !hasFlush {
+		return false, UndefinedRank
 	}
 
-	if !h.HasStraight() {
-		return false
+	hasStraight, r := h.HasStraight()
+	if !hasStraight {
+		return false, UndefinedRank
 	}
 
-	return true
+	return true, r
 }
 
-func (h Hand) StraightFlushRank() Rank {
-	return h.StraightRank()
-}
-
-func (h Hand) HasRoyalFlush() bool {
-	if !h.HasFlush() {
-		return false
+func (h Hand) HasRoyalFlush() (bool, Rank) {
+	hasFlush, _ := h.HasFlush()
+	if !hasFlush {
+		return false, UndefinedRank
 	}
 
 	h.Sort()
 
 	for i, card := range h.cards {
 		if card.rank != Rank(i+9) {
-			return false
+			return false, UndefinedRank
 		}
 	}
 
-	return true
+	return true, Rank(h.cards[0].suite)
 }
 
-func (h Hand) HasFourOfAKind() bool {
+func (h Hand) HasFourOfAKind() (bool, Rank) {
 	h.Sort()
 
 	i := 0
@@ -179,101 +170,40 @@ func (h Hand) HasFourOfAKind() bool {
 
 	for j := range 4 {
 		if h.cards[j+i].rank != kind {
-			return false
+			return false, UndefinedRank
 		}
 	}
 
-	return true
+	return true, kind
 }
 
-func (h Hand) FourOfAKindRank() Rank {
-	h.Sort()
-
-	kind := h.cards[0].rank
-	if h.cards[0].rank != h.cards[1].rank {
-		kind = h.cards[1].rank
-	}
-
-	return kind
-}
-
-func (h Hand) HasThreeOfAKind() bool {
+func (h Hand) HasThreeOfAKind() (bool, Rank) {
 	h.Sort()
 
 	for i := range len(h.cards) - 2 {
 		kind := h.cards[i].rank
 		if kind == h.cards[i+1].rank && kind == h.cards[i+2].rank {
-			return true
+			return true, kind
 		}
 	}
 
-	return false
+	return false, UndefinedRank
 }
 
-func (h Hand) ThreeOfAKindRank() Rank {
-	h.Sort()
-
-	for i := range len(h.cards) - 2 {
-		kind := h.cards[i].rank
-		if kind == h.cards[i+1].rank && kind == h.cards[i+2].rank {
-			return kind
-		}
-	}
-
-	return UndefinedRank
-}
-
-func (h Hand) HasPair() bool {
+func (h Hand) HasPair() (bool, Rank) {
 	h.Sort()
 
 	for i := range len(h.cards) - 1 {
 		kind := h.cards[i].rank
 		if kind == h.cards[i+1].rank {
-			return true
+			return true, kind
 		}
 	}
 
-	return false
+	return false, UndefinedRank
 }
 
-func (h Hand) PairRank() Rank {
-	for i := range len(h.cards) - 1 {
-		pair := h.cards[i].rank
-		if pair == h.cards[i+1].rank {
-			return pair
-		}
-	}
-
-	return UndefinedRank
-}
-
-func (h Hand) HasTwoPair() bool {
-	h.Sort()
-
-	pair := Rank(0)
-
-	for i := range len(h.cards) - 1 {
-		kind := h.cards[i].rank
-		if kind == h.cards[i+1].rank {
-			pair = kind
-
-			break
-		}
-	}
-
-	for j := range len(h.cards) - 1 {
-		if pair != Rank(0) {
-			pair2 := h.cards[j].rank
-			if pair2 == h.cards[j+1].rank && pair2 != pair {
-				return true
-			}
-		}
-	}
-
-	return false
-}
-
-func (h Hand) TwoPairRank() Rank {
+func (h Hand) HasTwoPair() (bool, Rank) {
 	h.Sort()
 
 	pair := Rank(0)
@@ -292,51 +222,33 @@ func (h Hand) TwoPairRank() Rank {
 			pair2 := h.cards[j].rank
 			if pair2 == h.cards[j+1].rank && pair2 != pair {
 				if pair > pair2 {
-					return pair
+					return true, pair
 				} else {
-					return pair2
+					return true, pair2
 				}
 			}
 		}
 	}
 
-	return UndefinedRank
+	return false, UndefinedRank
 }
 
-func (h Hand) HasFullHouse() bool {
+func (h Hand) HasFullHouse() (bool, Rank) {
 	h.Sort()
 
 	if h.cards[0].rank == h.cards[1].rank && h.cards[0].rank == h.cards[2].rank {
 		if h.cards[3].rank == h.cards[4].rank {
-			return true
+			return true, h.cards[0].rank
 		}
 	}
 
 	if h.cards[2].rank == h.cards[3].rank && h.cards[2].rank == h.cards[4].rank {
 		if h.cards[0].rank == h.cards[1].rank {
-			return true
+			return true, h.cards[2].rank
 		}
 	}
 
-	return false
-}
-
-func (h Hand) HasFullHouseRank() Rank {
-	h.Sort()
-
-	if h.cards[0].rank == h.cards[1].rank && h.cards[0].rank == h.cards[2].rank {
-		if h.cards[3].rank == h.cards[4].rank {
-			return h.cards[0].rank
-		}
-	}
-
-	if h.cards[2].rank == h.cards[3].rank && h.cards[2].rank == h.cards[4].rank {
-		if h.cards[0].rank == h.cards[1].rank {
-			return h.cards[2].rank
-		}
-	}
-
-	return UndefinedRank
+	return false, UndefinedRank
 }
 
 func (h Hand) HasHighestCard(o Hand) bool {
@@ -356,41 +268,50 @@ func (h Hand) WinningHand() (PokerHand, Rank) {
 	p := UndefinedPokerHand
 	r := UndefinedRank
 
-	if h.HasPair() {
+	hasPair, pairR := h.HasPair()
+	if hasPair {
 		p = OnePair
-		r = h.PairRank()
+		r = pairR
 	}
-	if h.HasTwoPair() {
+	hasTwoPair, twoPairR := h.HasTwoPair()
+	if hasTwoPair {
 		p = TwoPairs
-		r = h.TwoPairRank()
+		r = twoPairR
 	}
-	if h.HasThreeOfAKind() {
+	hasThreeOfAKind, threeR := h.HasThreeOfAKind()
+	if hasThreeOfAKind {
 		p = ThreeOfAKind
-		r = h.ThreeOfAKindRank()
+		r = threeR
 	}
-	if h.HasStraight() {
+	hasStraight, straightR := h.HasStraight()
+	if hasStraight {
 		p = Straight
-		r = h.StraightRank()
+		r = straightR
 	}
-	if h.HasFlush() {
+	hasFlush, flushR := h.HasFlush()
+	if hasFlush {
 		p = Flush
-		r = h.cards[h.HighestCard()].rank
+		r = flushR
 	}
-	if h.HasFullHouse() {
+	hasFullHouse, fullHouseR := h.HasFullHouse()
+	if hasFullHouse {
 		p = FullHouse
-		r = h.HasFullHouseRank()
+		r = fullHouseR
 	}
-	if h.HasFourOfAKind() {
+	hasFourOfAKind, fourR := h.HasFourOfAKind()
+	if hasFourOfAKind {
 		p = FourOfAKind
-		r = h.FourOfAKindRank()
+		r = fourR
 	}
-	if h.HasStraightFlush() {
+	hasStraightFlush, straightFlushR := h.HasStraightFlush()
+	if hasStraightFlush {
 		p = StraightFlush
-		r = h.StraightFlushRank()
+		r = straightFlushR
 	}
-	if h.HasRoyalFlush() {
+	hasRoyalFlush, royalR := h.HasRoyalFlush()
+	if hasRoyalFlush {
 		p = RoyalFlush
-		r = Ace
+		r = royalR
 	}
 
 	return p, r

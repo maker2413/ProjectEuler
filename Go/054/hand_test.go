@@ -108,7 +108,8 @@ func TestHand(t *testing.T) {
 		}
 
 		for _, tt := range tests {
-			assert.Equal(t, tt.expected, tt.input.HasStraight(), tt.input.Print())
+			result, _ := tt.input.HasStraight()
+			assert.Equal(t, tt.expected, result, tt.input.Print())
 		}
 	})
 
@@ -128,7 +129,8 @@ func TestHand(t *testing.T) {
 		}
 
 		for _, tt := range tests {
-			assert.Equal(t, tt.expected, tt.input.HasFlush(), tt.input.Print())
+			result, _ := tt.input.HasFlush()
+			assert.Equal(t, tt.expected, result, tt.input.Print())
 		}
 	})
 
@@ -160,7 +162,8 @@ func TestHand(t *testing.T) {
 		}
 
 		for _, tt := range tests {
-			assert.Equal(t, tt.expected, tt.input.HasStraightFlush(), tt.input.Print())
+			result, _ := tt.input.HasStraightFlush()
+			assert.Equal(t, tt.expected, result, tt.input.Print())
 		}
 	})
 
@@ -184,7 +187,8 @@ func TestHand(t *testing.T) {
 		}
 
 		for _, tt := range tests {
-			assert.Equal(t, tt.expected, tt.input.HasRoyalFlush(), tt.input.Print())
+			result, _ := tt.input.HasRoyalFlush()
+			assert.Equal(t, tt.expected, result, tt.input.Print())
 		}
 	})
 
@@ -212,7 +216,8 @@ func TestHand(t *testing.T) {
 		}
 
 		for _, tt := range tests {
-			assert.Equal(t, tt.expected, tt.input.HasFourOfAKind(), tt.input.Print())
+			result, _ := tt.input.HasFourOfAKind()
+			assert.Equal(t, tt.expected, result, tt.input.Print())
 		}
 	})
 
@@ -244,7 +249,8 @@ func TestHand(t *testing.T) {
 		}
 
 		for _, tt := range tests {
-			assert.Equal(t, tt.expected, tt.input.HasThreeOfAKind(), tt.input.Print())
+			result, _ := tt.input.HasThreeOfAKind()
+			assert.Equal(t, tt.expected, result, tt.input.Print())
 		}
 	})
 
@@ -268,7 +274,8 @@ func TestHand(t *testing.T) {
 		}
 
 		for _, tt := range tests {
-			assert.Equal(t, tt.expected, tt.input.HasPair(), tt.input.Print())
+			result, _ := tt.input.HasPair()
+			assert.Equal(t, tt.expected, result, tt.input.Print())
 		}
 	})
 
@@ -296,7 +303,8 @@ func TestHand(t *testing.T) {
 		}
 
 		for _, tt := range tests {
-			assert.Equal(t, tt.expected, tt.input.HasTwoPair(), tt.input.Print())
+			result, _ := tt.input.HasTwoPair()
+			assert.Equal(t, tt.expected, result, tt.input.Print())
 		}
 	})
 
@@ -324,7 +332,8 @@ func TestHand(t *testing.T) {
 		}
 
 		for _, tt := range tests {
-			assert.Equal(t, tt.expected, tt.input.HasFullHouse(), tt.input.Print())
+			result, _ := tt.input.HasFullHouse()
+			assert.Equal(t, tt.expected, result, tt.input.Print())
 		}
 	})
 
