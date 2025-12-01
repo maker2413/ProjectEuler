@@ -15,30 +15,30 @@ func sprial(grid *[gridSize][gridSize]int) {
 	grid[y][x] = count
 
 	for x != gridSize-1 && y != 0 {
-		for i := 0; i < radius; i++ {
+		for range radius {
 			count++
 			x++
 			grid[y][x] = count
 		}
-		for i := 0; i < radius; i++ {
+		for range radius {
 			count++
 			y++
 			grid[y][x] = count
 		}
 		radius++
-		for i := 0; i < radius; i++ {
+		for range radius {
 			count++
 			x--
 			grid[y][x] = count
 		}
-		for i := 0; i < radius; i++ {
+		for range radius {
 			count++
 			y--
 			grid[y][x] = count
 		}
 		radius++
 	}
-	for i := 0; i < radius-1; i++ {
+	for range radius - 1 {
 		count++
 		x++
 		grid[y][x] = count
