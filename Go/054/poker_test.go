@@ -50,7 +50,8 @@ func TestPoker(t *testing.T) {
 		}
 
 		for _, tt := range tests {
-			tt.input.CheckWinner()
+			err := tt.input.CheckWinner()
+			assert.NoError(t, err)
 			assert.Equal(t, tt.expected, tt.input.Winner,
 				tt.input.p1.Print(), tt.input.p2.Print(),
 				tt.input.p1PokerHand, tt.input.p2PokerHand)

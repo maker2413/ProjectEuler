@@ -44,7 +44,7 @@ func digitCancelling(n, m int) bool {
 }
 
 func main() {
-	var answer, nProd, dProd int = 0, 1, 1
+	var nProd, dProd = 1, 1
 
 	for a := 11; a < 99; a++ {
 		for b := a + 1; b <= 99; b++ {
@@ -56,7 +56,7 @@ func main() {
 	}
 
 	// Product of denominators divided by gcd of product of all fractions
-	answer = int(int64(dProd) / gcd(int64(nProd), int64(dProd)))
+	answer := int(int64(dProd) / gcd(int64(nProd), int64(dProd)))
 
-	fmt.Println(answer)
+	fmt.Println("Answer:", answer)
 }

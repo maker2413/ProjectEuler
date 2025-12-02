@@ -9,7 +9,7 @@ import (
 func isPandigital(str string) bool {
 	digits := make(map[string]int)
 
-	for s := 0; s < len(str); s++ {
+	for s := range str {
 		if string(str[s]) == "0" || string(str[s]) == "8" || string(str[s]) == "9" {
 			return false
 		}
@@ -17,11 +17,7 @@ func isPandigital(str string) bool {
 		digits[string(str[s])]++
 	}
 
-	if len(digits) == 7 {
-		return true
-	}
-
-	return false
+	return len(digits) == 7
 }
 
 func isPrime(n int) bool {
@@ -55,5 +51,5 @@ func main() {
 		}
 	}
 
-	fmt.Println(answer)
+	fmt.Println("Answer", answer)
 }

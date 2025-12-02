@@ -29,7 +29,7 @@ func isPrime(n int) bool {
 
 func main() {
 	var answer int
-	var maxConsec int = -1
+	maxConsec := -1
 	primes := []int{2}
 
 	for p := 3; primes[len(primes)-1] < to; p += 2 {
@@ -38,7 +38,7 @@ func main() {
 		}
 	}
 
-	for i := 0; i < len(primes); i++ {
+	for i := range primes {
 		var consec int
 		for j := i; j < len(primes); j++ {
 			consec += primes[j]
@@ -53,5 +53,5 @@ func main() {
 		}
 	}
 
-	fmt.Println(answer)
+	fmt.Println("Answer:", answer)
 }

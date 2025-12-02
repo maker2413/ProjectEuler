@@ -7,7 +7,7 @@ const (
 )
 
 func main() {
-	var n, m int = 1, 1
+	var n, m = 1, 1
 
 	answer := 0
 

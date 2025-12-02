@@ -5,20 +5,6 @@ import (
 	"strconv"
 )
 
-func isPandigital(str string) bool {
-	digits := make(map[string]int)
-
-	for s := 0; s < len(str); s++ {
-		digits[string(str[s])]++
-	}
-
-	if len(digits) == 10 {
-		return true
-	}
-
-	return false
-}
-
 func swap(str string, i, j int) string {
 	b := []byte(str)
 
@@ -44,7 +30,7 @@ func permutations(str string, index int, p *[]string) {
 func isDivisibile(str string) bool {
 	primes := []int{2, 3, 5, 7, 11, 13, 17}
 
-	for i := 0; i < len(primes); i++ {
+	for i := range primes {
 		n, _ := strconv.Atoi(str[i+1 : len(str)-6+i])
 
 		if n%primes[i] != 0 {
@@ -61,7 +47,7 @@ func main() {
 
 	permutations("0123456789", 0, &perms)
 
-	for i := 0; i < len(perms); i++ {
+	for i := range perms {
 		if isDivisibile(perms[i]) {
 			n, _ := strconv.Atoi(perms[i])
 
@@ -69,5 +55,5 @@ func main() {
 		}
 	}
 
-	fmt.Println(answer)
+	fmt.Println("Answer:", answer)
 }

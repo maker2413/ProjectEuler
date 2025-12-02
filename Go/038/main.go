@@ -21,11 +21,7 @@ func isPandigital(str string) bool {
 		digits[string(str[s])]++
 	}
 
-	if len(digits) == 9 {
-		return true
-	}
-
-	return false
+	return len(digits) == 9
 }
 
 func main() {
@@ -49,5 +45,5 @@ func main() {
 		}
 	}
 
-	fmt.Println(answer)
+	fmt.Println("Answer", answer)
 }

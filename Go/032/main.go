@@ -9,7 +9,7 @@ import (
 func confirmPandigital(str string) bool {
 	digits := make(map[string]int)
 
-	for s := 0; s < len(str); s++ {
+	for s := range str {
 		if string(str[s]) == "0" {
 			return false
 		}
@@ -17,11 +17,7 @@ func confirmPandigital(str string) bool {
 		digits[string(str[s])]++
 	}
 
-	if len(digits) == 9 {
-		return true
-	}
-
-	return false
+	return len(digits) == 9
 }
 
 func sumPandigital() int {
@@ -49,7 +45,6 @@ func sumPandigital() int {
 				if confirmPandigital(fullString.String()) {
 					if pandigital[strProd] == 0 {
 						sum += a * b
-						fmt.Println(a, b, a*b)
 						pandigital[strProd]++
 					}
 				}
@@ -62,8 +57,6 @@ func sumPandigital() int {
 
 func main() {
 	answer := sumPandigital()
-	//answer := confirmPandigital("437691258")
 
-	fmt.Println(answer)
-	//fmt.Println(confirmPandigital("123456780"))
+	fmt.Println("Answer:", answer)
 }

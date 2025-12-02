@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
+	"os"
 	"sort"
 	"strings"
 )
@@ -25,7 +25,7 @@ func main() {
 		triangleNumbers[int((.5*i)*(i+1.0))] = 1
 	}
 
-	f, _ := ioutil.ReadFile("words.txt")
+	f, _ := os.ReadFile("words.txt")
 
 	str := string(f)
 	str = strings.ReplaceAll(str, "\"", "")
@@ -39,5 +39,5 @@ func main() {
 		}
 	}
 
-	fmt.Println(answer)
+	fmt.Println("Answer:", answer)
 }

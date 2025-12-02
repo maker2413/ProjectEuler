@@ -6,10 +6,6 @@ import (
 	"strconv"
 )
 
-const (
-	to = 1000000
-)
-
 func swap(str string, i, j int) string {
 	b := []byte(str)
 
@@ -53,5 +49,5 @@ func main() {
 		i++
 	}
 
-	fmt.Println(answer)
+	fmt.Println("Answer:", answer)
 }

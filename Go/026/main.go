@@ -5,10 +5,6 @@ import (
 	"math"
 )
 
-const (
-	to = 1000
-)
-
 func isPrime(n int) bool {
 	if n < 2 {
 		return false
@@ -44,5 +40,5 @@ func genPrimeNumbers(n int) []int {
 func main() {
 	answer := genPrimeNumbers(1000)
 
-	fmt.Println(answer[165:])
+	fmt.Println("Answer:", answer[165:])
 }

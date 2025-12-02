@@ -18,8 +18,8 @@ func divisorCount(n int) int {
 }
 
 func main() {
-	var answer int = 1
-	var i int = 2
+	answer := 1
+	i := 2
 
 	for divisorCount(answer) < 500 {
 		answer += i

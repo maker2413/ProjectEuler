@@ -56,7 +56,6 @@ func convertToWords(n int, result *strings.Builder) string {
 	switch {
 	case n > 9999:
 		result.WriteString("Numbers this large are currently not supported")
-		n = 0
 	case n >= 1000:
 		m := firstDigit(n)
 		result.WriteString(words[m])

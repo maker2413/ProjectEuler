@@ -20,16 +20,12 @@ func hexagonalNumber(n int) int {
 
 func main() {
 	var answer int
-	var triNums, pentNums, hexNums []int
+	var pentNums, hexNums []int
 
 	// Every Hexagonal number is also a triangle number
 	// H_n = T_2n-1
 	for h := 1; h <= to; h++ {
 		hexNums = append(hexNums, hexagonalNumber(h))
-	}
-
-	for t := 1; t <= to; t++ {
-		triNums = append(triNums, triangleNumber(t))
 	}
 
 	for p := 1; p <= to; p++ {
@@ -44,5 +40,5 @@ func main() {
 		}
 	}
 
-	fmt.Println(answer)
+	fmt.Println("Answer:", answer)
 }

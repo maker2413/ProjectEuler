@@ -12,9 +12,9 @@ const (
 func findPerimeters(n int) [][]int {
 	var perimeters [][]int
 
-	for a := 1.0; a < math.Ceil(float64(n/2)); a++ {
-		for b := 1.0; b < math.Ceil(float64(n/2)); b++ {
-			c := math.Sqrt(math.Pow(a, 2) + math.Pow(b, 2))
+	for a := 1.0; a < float64(n/2); a++ {
+		for b := 1.0; b < float64(n/2); b++ {
+			c := math.Sqrt((a * a) + (b * b))
 
 			if a+b+c == float64(n) {
 				perimeters = append(perimeters, []int{int(a), int(b), int(c)})
@@ -36,5 +36,5 @@ func main() {
 		}
 	}
 
-	fmt.Println(answer)
+	fmt.Println("Answer:", answer)
 }

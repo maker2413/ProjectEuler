@@ -15,7 +15,12 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer file.Close()
+	defer func() {
+		err = file.Close()
+		if err != nil {
+			log.Fatalln(err)
+		}
+	}()
 
 	scanner := bufio.NewScanner(file)
 
@@ -28,12 +33,15 @@ func main() {
 			p2: ConvertToHand([5]string(firstHand[5:])),
 		}
 
-		pg.CheckWinner()
+		err = pg.CheckWinner()
+		if err != nil {
+			log.Fatalln(err)
+		}
 
 		if pg.Winner == 1 {
 			answer++
 		}
 	}
 
-	fmt.Println(answer)
+	fmt.Println("Answer:", answer)
 }

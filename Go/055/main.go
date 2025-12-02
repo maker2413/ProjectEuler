@@ -11,7 +11,7 @@ const (
 )
 
 func palindromeCheck(num string) bool {
-	for i := 0; i < len(num)/2; i++ {
+	for i := range len(num) / 2 {
 		if string(num[i]) != string(num[len(num)-1-i]) {
 			return false
 		}
@@ -44,11 +44,7 @@ func lychrelCheck(num int) bool {
 		}
 	}
 
-	if !palindromeCheck(strconv.Itoa(lychrel)) {
-		return true
-	}
-
-	return false
+	return !palindromeCheck(strconv.Itoa(lychrel))
 }
 
 func main() {
@@ -60,5 +56,5 @@ func main() {
 		}
 	}
 
-	fmt.Println(answer)
+	fmt.Println("Answer:", answer)
 }

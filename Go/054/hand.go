@@ -25,7 +25,7 @@ func (h Hand) Print() string {
 		if i != 4 {
 			s += fmt.Sprintf("%s, ", c.Print())
 		} else {
-			s += fmt.Sprintf("%s", c.Print())
+			s += c.Print()
 		}
 	}
 

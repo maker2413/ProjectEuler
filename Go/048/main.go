@@ -10,7 +10,7 @@ const (
 	digits = 10
 )
 
-func lastTenDigits(s, value string) uint64 {
+func lastTenDigits(s string) uint64 {
 	var i uint64
 
 	if len(s) >= digits {
@@ -31,15 +31,15 @@ func lastTenDigits(s, value string) uint64 {
 func main() {
 	var answer uint64
 
-	x := big.NewInt(1)
+	var x *big.Int
 
 	for i := 1000; i > 0; i-- {
 		x = big.NewInt(int64(i))
 		x.Exp(x, big.NewInt(int64(i)), nil)
 
-		answer += lastTenDigits(x.String(), "x")
-		answer = lastTenDigits(fmt.Sprint(answer), "answer")
+		answer += lastTenDigits(x.String())
+		answer = lastTenDigits(fmt.Sprint(answer))
 	}
 
-	fmt.Println(answer)
+	fmt.Println("Answer:", answer)
 }

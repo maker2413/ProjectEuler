@@ -27,15 +27,11 @@ func checkAbundant(n int) bool {
 		}
 	}
 
-	if sum > n {
-		return true
-	}
-
-	return false
+	return sum > n
 }
 
 func checkSumOfAbundant(n int) bool {
-	for j := 0; j < len(abundantNumsList); j++ {
+	for j := range abundantNumsList {
 		if abundantNumsList[j] < n {
 			if abundantNums[n-abundantNumsList[j]] {
 				return true
@@ -62,6 +58,5 @@ func main() {
 		}
 	}
 
-	fmt.Println(checkAbundant(16))
-	fmt.Println(answer)
+	fmt.Println("Answer:", answer)
 }

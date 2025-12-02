@@ -3,11 +3,7 @@ package main
 import "fmt"
 
 func checkSunday(n int) bool {
-	if n%7 == 0 {
-		return true
-	}
-
-	return false
+	return n%7 == 0
 }
 
 func main() {
