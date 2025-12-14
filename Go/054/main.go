@@ -18,14 +18,13 @@ func main() {
 	defer func() {
 		err = file.Close()
 		if err != nil {
-			log.Fatalln(err)
+			log.Fatal(err)
 		}
 	}()
 
 	scanner := bufio.NewScanner(file)
 
 	for scanner.Scan() {
-
 		firstHand := strings.Split(scanner.Text(), " ")
 
 		pg := PokerGame{
