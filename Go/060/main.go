@@ -89,10 +89,11 @@ func checkSet(nums []int) bool {
 	return true
 }
 
-func findSet(nums []int) []int {
-	set := []int{}
+func findSets(nums []int) [][]int {
+	sets := [][]int{}
 
 	for a := 1; a < len(nums)-3; a++ {
+		set := []int{}
 		for b := a + 1; b < len(nums)-2; b++ {
 			if !isPrimePair(nums[a], nums[b]) {
 				continue
@@ -102,21 +103,21 @@ func findSet(nums []int) []int {
 				if !isPrimePair(nums[a], nums[c]) {
 					continue
 				}
-				for d := c + 1; d < len(nums)-1; d++ {
+				for d := c + 1; d < len(nums); d++ {
 					if !isPrimePair(nums[a], nums[d]) {
 						continue
 					}
 
 					set = []int{nums[0], nums[a], nums[b], nums[c], nums[d]}
 					if checkSet(set) {
-						return set
+						sets = append(sets, set)
 					}
 				}
 			}
 		}
 	}
 
-	return nil
+	return sets
 }
 
 func sumSet(nums []int) int {
@@ -146,10 +147,14 @@ func main() {
 		}
 
 		if len(primePairs) > 5 {
-			sum := sumSet(findSet(primePairs))
+			sets := findSets(primePairs)
 
-			if sum < answer && sum != 0 {
-				answer = sum
+			for _, set := range sets {
+				sum := sumSet(set)
+
+				if sum < answer && sum != 0 {
+					answer = sum
+				}
 			}
 		}
 	}
