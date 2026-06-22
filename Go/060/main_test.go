@@ -99,3 +99,21 @@ func TestIsPrimePair(t *testing.T) {
 			"got: %t, want: %t", result, test.expected)
 	}
 }
+
+func TestSumSet(t *testing.T) {
+	tests := []struct {
+		nums     []int
+		expected int
+	}{
+		{[]int{}, 0},
+		{[]int{0}, 0},
+		{[]int{3}, 3},
+		{[]int{3, 7, 19, 109}, 138},
+	}
+
+	for _, test := range tests {
+		result := sumSet(test.nums)
+		assert.Equal(t, test.expected, result,
+			"got: %d, want: %d", result, test.expected)
+	}
+}

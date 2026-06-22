@@ -93,7 +93,7 @@ func findSets(nums []int) [][]int {
 	sets := [][]int{}
 
 	for a := 1; a < len(nums)-3; a++ {
-		set := []int{}
+		var set []int
 		for b := a + 1; b < len(nums)-2; b++ {
 			if !isPrimePair(nums[a], nums[b]) {
 				continue
