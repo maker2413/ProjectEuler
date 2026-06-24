@@ -131,7 +131,7 @@ func sumSet(nums []int) int {
 }
 
 func main() {
-	answer := primeLimit
+	answer := 0
 
 	primes := primeSieve(primeLimit)
 
@@ -148,12 +148,15 @@ func main() {
 
 		if len(primePairs) > 5 {
 			sets := findSets(primePairs)
+			if len(sets) > 0 {
+				fmt.Println(sets)
 
-			for _, set := range sets {
-				sum := sumSet(set)
+				for _, set := range sets {
+					sum := sumSet(set)
 
-				if sum < answer && sum != 0 {
-					answer = sum
+					if (sum < answer || answer == 0) && sum != 0 {
+						answer = sum
+					}
 				}
 			}
 		}
