@@ -1,12 +1,15 @@
 package main
 
-import "fmt"
-
-const (
-	to = 1000
+import (
+	"fmt"
+	"time"
 )
 
-func main() {
+const (
+	limit = 1_000_000
+)
+
+func solve(to int) int {
 	var answer int
 
 	for i := 3; i < to; i++ {
@@ -15,5 +18,14 @@ func main() {
 		}
 	}
 
+	return answer
+}
+
+func main() {
+	start := time.Now()
+	answer := solve(limit)
+	elapsed := time.Since(start)
+
 	fmt.Println(answer)
+	fmt.Printf("%.6f seconds\n", elapsed.Seconds())
 }
