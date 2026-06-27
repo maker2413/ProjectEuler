@@ -1,15 +1,17 @@
 package main
 
-import "fmt"
-
-const (
-	to = 4000000
+import (
+	"fmt"
+	"time"
 )
 
-func main() {
-	var n, m = 1, 1
+const (
+	limit = 4_000_000
+)
 
+func solve(to int) int {
 	answer := 0
+	var n, m = 1, 1
 
 	for m < to {
 		m += n
@@ -19,5 +21,14 @@ func main() {
 		}
 	}
 
+	return answer
+}
+
+func main() {
+	start := time.Now()
+	answer := solve(limit)
+	elapsed := time.Since(start)
+
 	fmt.Println(answer)
+	fmt.Printf("%.6f seconds\n", elapsed.Seconds())
 }

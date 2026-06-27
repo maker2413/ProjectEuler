@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	limit = 1_000_000
+	limit = 1_000
 )
 
 func solve(to int) int {
