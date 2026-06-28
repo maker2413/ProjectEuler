@@ -13,4 +13,5 @@ function solve(to)
 end
 
 println(solve(limit))
+println("--------------------------------------------------")
 @time solve(limit)

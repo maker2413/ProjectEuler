@@ -3,11 +3,11 @@ package main
 import (
 	"fmt"
 	"math"
+	"time"
 )
 
 const (
-	// to = 13195
-	to = 600851475143
+	limit = 600851475143
 )
 
 func isPrime(n int) bool {
@@ -42,10 +42,10 @@ func genPrimeNumbers(n int) []int {
 	return list
 }
 
-func main() {
-	n := genPrimeNumbers(int(math.Pow(to, .5)))
+func solve(to int) int {
+	answer := 0
 
-	var answer int
+	n := genPrimeNumbers(int(math.Pow(float64(to), .5)))
 
 	for _, num := range n {
 		if to%num == 0 {
@@ -53,5 +53,15 @@ func main() {
 		}
 	}
 
+	return answer
+}
+
+func main() {
+	start := time.Now()
+	answer := solve(limit)
+	elapsed := time.Since(start)
+
 	fmt.Println(answer)
+	fmt.Println("--------------------------------------------------")
+	fmt.Printf("  %.6f seconds\n", elapsed.Seconds())
 }
