@@ -10,47 +10,33 @@ const (
 	limit = 600851475143
 )
 
-func isPrime(n int) bool {
-	if n < 2 {
-		return false
-	} else if n <= 3 {
-		return true
-	} else if n%2 == 0 {
-		return false
-	}
-
-	for i := 3; i <= int(math.Pow(float64(n), .5)); i += 2 {
-		if n%i == 0 {
-			return false
-		}
-	}
-
-	return true
-}
-
-func genPrimeNumbers(n int) []int {
-	var list []int
-
-	list = append(list, 2)
-
-	for i := 3; i < n; i += 2 {
-		if isPrime(i) {
-			list = append(list, i)
-		}
-	}
-
-	return list
-}
-
 func solve(to int) int {
-	answer := 0
+	answer := 1
 
-	n := genPrimeNumbers(int(math.Pow(float64(to), .5)))
+	if to%2 == 0 {
+		answer = 2
+		to /= 2
 
-	for _, num := range n {
-		if to%num == 0 {
-			answer = num
+		for to%2 == 0 {
+			to /= 2
 		}
+	}
+
+	i := 3
+	for i <= int(math.Pow(float64(to), .5)) {
+		if to%i == 0 {
+			answer = i
+
+			for to%i == 0 {
+				to /= i
+			}
+		}
+
+		i += 2
+	}
+
+	if to > answer {
+		return to
 	}
 
 	return answer
